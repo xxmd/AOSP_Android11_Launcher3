@@ -150,7 +150,9 @@ LOCAL_SRC_FILES := \
     $(call all-java-files-under, src) \
     $(call all-java-files-under, quickstep/src) \
     $(call all-java-files-under, quickstep/recents_ui_overrides/src) \
-    $(call all-java-files-under, src_shortcuts_overrides)
+    $(call all-java-files-under, src_shortcuts_overrides) \
+    quickstep/src/com/google/android/libraries/launcherclient/ILauncherOverlay.aidl \
+    quickstep/src/com/google/android/libraries/launcherclient/ILauncherOverlayCallback.aidl
 
 LOCAL_RESOURCE_DIR := \
     $(LOCAL_PATH)/quickstep/res \
