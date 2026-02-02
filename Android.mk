@@ -151,7 +151,7 @@ LOCAL_SRC_FILES := \
     $(call all-java-files-under, quickstep/src) \
     $(call all-java-files-under, quickstep/recents_ui_overrides/src) \
     $(call all-java-files-under, src_shortcuts_overrides) \
-    $(call all-Iaidl-files-under, quickstep/src)
+    $(call all-Iaidl-files-under, src)
 
 
 LOCAL_RESOURCE_DIR := \
