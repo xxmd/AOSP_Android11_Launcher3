@@ -1,4 +1,4 @@
-package custom.aidl;
+package custom.client;
 
 import android.os.Bundle;
 import android.os.IBinder;

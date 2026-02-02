@@ -1,10 +1,12 @@
-package custom;
+package custom.client;
 
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.content.pm.ServiceInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,9 +19,9 @@ import android.view.WindowManager;
 import com.google.android.libraries.launcherclient.ILauncherOverlay;
 import com.google.android.libraries.launcherclient.ILauncherOverlayCallback;
 
-import custom.aidl.SafeLauncherOverlay;
 import custom.util.LogUtil;
 import custom.view.HorizontalScrollMonitor;
+
 public class OverlayWindowCore {
     private Activity activity;
     private View rootView;
@@ -32,8 +34,12 @@ public class OverlayWindowCore {
     }
 
     public void bindService() {
+        String packageName = "com.google.android.googlequicksearchbox";
+        String serviceName = "com.google.android.apps.gsa.nowoverlayservice.DrawerOverlayService";
+        boolean serviceExist = isServiceExist(activity, packageName, serviceName);
+        LogUtil.debug("bindService serviceExist: " + serviceExist);
         Intent intent = new Intent("com.android.launcher3.WINDOW_OVERLAY");
-        intent.setClassName(activity.getPackageName(), "com.google.android.apps.gsa.nowoverlayservice.DrawerOverlayService");
+        intent.setClassName(packageName, serviceName);
         intent.setData(Uri.parse("app://somepath"));
         boolean bindServiceSuccess = activity.bindService(intent, new ServiceConnection() {
             @Override
@@ -70,6 +76,36 @@ public class OverlayWindowCore {
             }
         }, Context.BIND_AUTO_CREATE);
         LogUtil.debug("bindServiceSuccess: " + bindServiceSuccess);
+    }
+
+    /**
+     * 判断指定 Service 是否存在（已注册在系统中）
+     *
+     * @param context     上下文
+     * @param packageName 服务所在的包名
+     * @param className   服务完整类名（包含包名）
+     * @return true = 存在，false = 不存在
+     */
+    public static boolean isServiceExist(Context context, String packageName, String className) {
+        try {
+            PackageManager pm = context.getPackageManager();
+
+            // 构造 ComponentName
+            ComponentName component = new ComponentName(packageName, className);
+
+            // 查询 ServiceInfo
+            ServiceInfo serviceInfo = pm.getServiceInfo(component, 0);
+
+            // 如果能拿到 ServiceInfo，说明服务存在
+            return serviceInfo != null;
+        } catch (PackageManager.NameNotFoundException e) {
+            // 包名或类名不存在 → 服务不存在
+            return false;
+        } catch (Exception e) {
+            // 其他异常（如权限问题），也视为不存在
+            LogUtil.error("ServiceCheck Check service failed", e);
+            return false;
+        }
     }
 
 
