@@ -28,10 +28,11 @@ public class OverlayWindowCore {
     private SafeLauncherOverlay safeLauncherOverlay;
     public static final String OVERLAY_PACKAGE_NAME = "com.google.android.googlequicksearchbox";
     public static final String OVERLAY_SERVICE_NAME = "com.google.android.apps.gsa.nowoverlayservice.DrawerOverlayService";
+    private HorizontalScrollMonitor scrollMonitor;
 
-    public OverlayWindowCore(Activity activity, View rootView) {
+    public OverlayWindowCore(Activity activity) {
         this.activity = activity;
-        this.rootView = rootView;
+        this.scrollMonitor = new HorizontalScrollMonitor(activity);
     }
 
     public void bindService() {
@@ -61,7 +62,6 @@ public class OverlayWindowCore {
                         LogUtil.step("ILauncherOverlaylauncherOverlay onServiceStatus bundle: " + bundle);
                         int serviceStatus = bundle.getInt("service_status");
                         serviceConnected = true;
-                        addScrollListener(rootView);
                     }
                 };
                 Bundle bundle = buildAttachWindowBundle();
@@ -108,10 +108,12 @@ public class OverlayWindowCore {
         }
     }
 
-
-    private void addScrollListener(View rootView) {
-        LogUtil.step("addScrollListener rootView: " + rootView);
-        HorizontalScrollMonitor scrollMonitor = new HorizontalScrollMonitor(activity);
+    public void addScrollListener(View rootView) {
+        HorizontalScrollMonitor.ScrollListener scrollListener = scrollMonitor.getScrollListener();
+        LogUtil.step(String.format("addScrollListener rootView: %s, scrollListener: %s", serviceConnected, rootView, scrollListener));
+        if (rootView == null || scrollListener != null) {
+            return;
+        }
         int measuredWidth = rootView.getMeasuredWidth();
         if (measuredWidth == 0) {
             measuredWidth = rootView.getContext().getResources().getDisplayMetrics().widthPixels;
@@ -123,23 +125,29 @@ public class OverlayWindowCore {
                 return scrollMonitor.onTouchEvent(event);
             }
         });
-        scrollMonitor.setOnHorizontalScrollListener(new HorizontalScrollMonitor.OnHorizontalScrollListener() {
+        scrollMonitor.setScrollListener(new HorizontalScrollMonitor.ScrollListener() {
             @Override
             public void onScrollStart() {
                 LogUtil.debug(String.format("onScrollStart"));
-                safeLauncherOverlay.startScroll();
+                if (serviceConnected) {
+                    safeLauncherOverlay.startScroll();
+                }
             }
 
             @Override
             public void onScrolling(float deltaX, float progress) {
                 LogUtil.debug(String.format("onScrolling deltaX: %f, progress: %f", deltaX, progress));
-                safeLauncherOverlay.onScroll(progress);
+                if (serviceConnected) {
+                    safeLauncherOverlay.onScroll(progress);
+                }
             }
 
             @Override
             public void onScrollEnd(float deltaX, float velocityX) {
                 LogUtil.debug(String.format("onScrollEnd deltaX: %f, velocityX: %f", deltaX, velocityX));
-                safeLauncherOverlay.endScroll();
+                if (serviceConnected) {
+                    safeLauncherOverlay.endScroll();
+                }
             }
         });
     }

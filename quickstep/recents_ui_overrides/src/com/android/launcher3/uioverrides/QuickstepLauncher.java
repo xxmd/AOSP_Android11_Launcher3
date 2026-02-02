@@ -96,16 +96,19 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
     public static final AsyncCommand SET_SHELF_HEIGHT = (context, arg1, arg2) ->
             SystemUiProxy.INSTANCE.get(context).setShelfHeight(arg1 != 0, arg2);
 
+    private OverlayWindowCore overlayWindowCore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (mHotseatPredictionController != null) {
             mHotseatPredictionController.createPredictor();
         }
+        initOverlayWindow(this);
     }
 
     private void initOverlayWindow(Activity activity) {
-        OverlayWindowCore overlayWindowCore = new OverlayWindowCore(activity, findViewById(android.R.id.content));
+        this.overlayWindowCore = new OverlayWindowCore(activity, findViewById(android.R.id.content));
         overlayWindowCore.bindService();
     }
 
@@ -115,7 +118,8 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
         if (FeatureFlags.ENABLE_HYBRID_HOTSEAT.get()) {
             mHotseatPredictionController = new HotseatPredictionController(this);
         }
-        initOverlayWindow(this);
+        LogUtil.debug(String.format("setupViews"));
+        overlayWindowCore.addScrollListener(findViewById(android.R.id.content));
     }
 
     @Override

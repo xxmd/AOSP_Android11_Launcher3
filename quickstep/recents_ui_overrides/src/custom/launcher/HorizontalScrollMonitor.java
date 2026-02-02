@@ -23,9 +23,9 @@ public class HorizontalScrollMonitor {
     // 用于计算比例的最大滑动距离，可外部设置
     private float mMaxScrollDistance = 1000f;
 
-    private OnHorizontalScrollListener mListener;
+    private ScrollListener mListener;
 
-    public interface OnHorizontalScrollListener {
+    public interface ScrollListener {
         void onScrollStart();
         void onScrolling(float deltaX, float progress);
         void onScrollEnd(float deltaX, float velocityX);
@@ -35,8 +35,12 @@ public class HorizontalScrollMonitor {
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
-    public void setOnHorizontalScrollListener(OnHorizontalScrollListener listener) {
+    public void setScrollListener(ScrollListener listener) {
         this.mListener = listener;
+    }
+
+    public ScrollListener getScrollListener() {
+        return mListener;
     }
 
     public void setMaxScrollDistance(float maxDistance) {
