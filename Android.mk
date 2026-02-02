@@ -26,6 +26,7 @@ LOCAL_MODULE_TAGS := optional
 
 LOCAL_STATIC_ANDROID_LIBRARIES := \
     androidx.recyclerview_recyclerview \
+    androidx.viewpager2_viewpager2 \
     androidx.dynamicanimation_dynamicanimation \
     androidx.preference_preference \
     iconloader_base
