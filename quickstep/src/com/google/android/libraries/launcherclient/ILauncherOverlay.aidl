@@ -1,6 +1,8 @@
 // ILauncherOverlay.aidl
 package com.google.android.libraries.launcherclient;
 import com.google.android.libraries.launcherclient.ILauncherOverlayCallback;
+import android.view.WindowManager.LayoutParams;
+import android.os.Bundle;
 
 interface ILauncherOverlay {
     oneway void startScroll(); // Launcher 主动开始滑动，调此方法通知 Overlay
