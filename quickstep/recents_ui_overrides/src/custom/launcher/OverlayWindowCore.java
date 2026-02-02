@@ -1,4 +1,4 @@
-package custom.client;
+package custom.launcher;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -19,8 +19,7 @@ import android.view.WindowManager;
 import com.google.android.libraries.launcherclient.ILauncherOverlay;
 import com.google.android.libraries.launcherclient.ILauncherOverlayCallback;
 
-import custom.util.LogUtil;
-import custom.view.HorizontalScrollMonitor;
+import custom.common.util.LogUtil;
 
 public class OverlayWindowCore {
     private Activity activity;
