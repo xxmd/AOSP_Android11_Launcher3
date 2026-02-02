@@ -118,13 +118,16 @@ public class OverlayWindowCore {
         if (measuredWidth == 0) {
             measuredWidth = rootView.getContext().getResources().getDisplayMetrics().widthPixels;
         }
+        LogUtil.step(String.format("rootView measuredWidth: %d", measuredWidth));
         scrollMonitor.setMaxScrollDistance(measuredWidth);
         rootView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                LogUtil.debug(String.format("rootView onTouch: %s", event));
                 return scrollMonitor.onTouchEvent(event);
             }
         });
+        LogUtil.step(String.format("rootView.setOnTouchListener"));
         scrollMonitor.setScrollListener(new HorizontalScrollMonitor.ScrollListener() {
             @Override
             public void onScrollStart() {
