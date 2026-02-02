@@ -111,9 +111,10 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
 
     @Override
     protected void onResume() {
-        LogUtil.debug(String.format("QuickstepLauncher onResume"));
+        View rootView = getRootView();
+        LogUtil.debug(String.format("QuickstepLauncher onResume rootView: " + rootView));
         super.onResume();
-        overlayWindowCore.addScrollListener(findViewById(android.R.id.content));
+        overlayWindowCore.addScrollListener(rootView);
     }
 
     private void initOverlayWindow(Activity activity) {
