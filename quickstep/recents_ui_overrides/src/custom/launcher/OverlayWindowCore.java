@@ -26,6 +26,8 @@ public class OverlayWindowCore {
     private View rootView;
     private boolean serviceConnected = false;
     private SafeLauncherOverlay safeLauncherOverlay;
+    public static final String OVERLAY_PACKAGE_NAME = "com.google.android.googlequicksearchbox";
+    public static final String OVERLAY_SERVICE_NAME = "com.google.android.apps.gsa.nowoverlayservice.DrawerOverlayService";
 
     public OverlayWindowCore(Activity activity, View rootView) {
         this.activity = activity;
@@ -33,16 +35,15 @@ public class OverlayWindowCore {
     }
 
     public void bindService() {
-        String packageName = "com.google.android.googlequicksearchbox";
-        String serviceName = "com.google.android.apps.gsa.nowoverlayservice.DrawerOverlayService";
-        boolean serviceExist = isServiceExist(activity, packageName, serviceName);
-        LogUtil.debug("bindService serviceExist: " + serviceExist);
+        boolean serviceExist = isServiceExist(activity, OVERLAY_PACKAGE_NAME, OVERLAY_SERVICE_NAME);
+        LogUtil.step("bindService serviceExist: " + serviceExist);
         Intent intent = new Intent("com.android.launcher3.WINDOW_OVERLAY");
-        intent.setClassName(packageName, serviceName);
+        intent.setClassName(OVERLAY_PACKAGE_NAME, OVERLAY_SERVICE_NAME);
         intent.setData(Uri.parse("app://somepath"));
         boolean bindServiceSuccess = activity.bindService(intent, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
+                LogUtil.step("onServiceConnected service: " + service);
                 ILauncherOverlay launcherOverlay = ILauncherOverlay.Stub.asInterface(service);
                 ILauncherOverlayCallback callback = new ILauncherOverlayCallback.Stub() {
                     @Override
@@ -57,7 +58,7 @@ public class OverlayWindowCore {
 
                     @Override
                     public void onServiceStatus(Bundle bundle) throws RemoteException {
-                        LogUtil.debug("ILauncherOverlaylauncherOverlay onServiceStatus bundle: " + bundle);
+                        LogUtil.step("ILauncherOverlaylauncherOverlay onServiceStatus bundle: " + bundle);
                         int serviceStatus = bundle.getInt("service_status");
                         serviceConnected = true;
                         addScrollListener(rootView);
@@ -74,7 +75,7 @@ public class OverlayWindowCore {
                 serviceConnected = false;
             }
         }, Context.BIND_AUTO_CREATE);
-        LogUtil.debug("bindServiceSuccess: " + bindServiceSuccess);
+        LogUtil.step("bindServiceSuccess: " + bindServiceSuccess);
     }
 
     /**
@@ -109,12 +110,12 @@ public class OverlayWindowCore {
 
 
     private void addScrollListener(View rootView) {
+        LogUtil.step("addScrollListener rootView: " + rootView);
         HorizontalScrollMonitor scrollMonitor = new HorizontalScrollMonitor(activity);
         int measuredWidth = rootView.getMeasuredWidth();
         if (measuredWidth == 0) {
             measuredWidth = rootView.getContext().getResources().getDisplayMetrics().widthPixels;
         }
-        LogUtil.debug("measuredWidth: " + measuredWidth);
         scrollMonitor.setMaxScrollDistance(measuredWidth);
         rootView.setOnTouchListener(new View.OnTouchListener() {
             @Override
