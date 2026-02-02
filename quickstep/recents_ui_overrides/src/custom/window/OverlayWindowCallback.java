@@ -14,10 +14,16 @@ import android.view.accessibility.AccessibilityEvent;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class DefaultWindowCallback implements Window.Callback {
+import custom.util.LogUtil;
+
+public class OverlayWindowCallback implements Window.Callback {
     private Window.Callback srcCallback;
 
-    public DefaultWindowCallback(Window.Callback srcCallback) {
+    public void onBackPressed() {
+        LogUtil.debug("OverlayWindowCallback onBackPressed");
+    }
+
+    public OverlayWindowCallback(Window.Callback srcCallback) {
         this.srcCallback = srcCallback;
     }
 
@@ -28,6 +34,11 @@ public class DefaultWindowCallback implements Window.Callback {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            if (event.getAction() == KeyEvent.ACTION_UP) {
+                onBackPressed();
+            }
+        }
         return srcCallback.dispatchKeyEvent(event);
     }
 
@@ -43,6 +54,7 @@ public class DefaultWindowCallback implements Window.Callback {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
+
         return srcCallback.dispatchTouchEvent(event);
     }
 

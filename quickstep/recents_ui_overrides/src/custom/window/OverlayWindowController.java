@@ -3,17 +3,14 @@ package custom.window;
 import android.view.Window;
 import android.view.WindowManager;
 
-import custom.util.LogUtil;
-
-public class WindowStateManager {
+public class OverlayWindowController {
     private Window window;
 
-    public WindowStateManager(Window window) {
+    public OverlayWindowController(Window window) {
         this.window = window;
     }
 
     public void setVisible(boolean visible) {
-        LogUtil.debug("WindowStateManager setVisible: " + visible);
         WindowManager.LayoutParams attributes = window.getAttributes();
         attributes.alpha = visible ? 1.0f : 0.0f;
         window.setAttributes(attributes);

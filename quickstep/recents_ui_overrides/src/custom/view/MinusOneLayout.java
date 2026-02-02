@@ -10,8 +10,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -36,15 +34,15 @@ public class MinusOneLayout extends FrameLayout {
     private int leftItemIndex = 0;
     private int rightItemIndex = 1;
 
-    public MinusOneLayout(@NonNull Context context) {
+    public MinusOneLayout(Context context) {
         this(context, null);
     }
 
-    public MinusOneLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public MinusOneLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MinusOneLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public MinusOneLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -126,7 +124,7 @@ public class MinusOneLayout extends FrameLayout {
     /**
      * 获取左边页面的当前 View（可能是自定义 View 或占位 TextView）
      */
-    @Nullable
+    
     public View getLeftView() {
         if (mLeftContainer != null && mLeftContainer.getChildCount() > 0) {
             return mLeftContainer.getChildAt(0);
@@ -137,7 +135,7 @@ public class MinusOneLayout extends FrameLayout {
     /**
      * 获取右边页面的当前 View（居中显示“右边”的 TextView）
      */
-    @Nullable
+    
     public View getRightView() {
         if (mRightContainer != null && mRightContainer.getChildCount() > 0) {
             return mRightContainer.getChildAt(0);
@@ -180,9 +178,9 @@ public class MinusOneLayout extends FrameLayout {
      */
     private class SimplePagerAdapter extends RecyclerView.Adapter<SimplePagerAdapter.ViewHolder> {
 
-        @NonNull
+
         @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             FrameLayout container = new FrameLayout(parent.getContext());
             container.setLayoutParams(new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
@@ -192,7 +190,7 @@ public class MinusOneLayout extends FrameLayout {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        public void onBindViewHolder(ViewHolder holder, int position) {
             FrameLayout container = holder.container;
             container.removeAllViews();
 
