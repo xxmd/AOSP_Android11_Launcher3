@@ -1,14 +1,14 @@
 // ILauncherOverlay.aidl
 package com.google.android.libraries.launcherclient;
 import com.google.android.libraries.launcherclient.ILauncherOverlayCallback;
-import android.view.WindowManager.LayoutParams;
+import android.view.WindowManager;
 import android.os.Bundle;
 
 interface ILauncherOverlay {
     oneway void startScroll(); // Launcher 主动开始滑动，调此方法通知 Overlay
     oneway void onScroll(in float progress); // Launcher 滑动的进度
     oneway void endScroll(); // Launcher 停止滑动，调此方法通知 Overlay
-    oneway void windowAttached(in LayoutParams lp, in ILauncherOverlayCallback cb, in int flags);
+    oneway void windowAttached(in WindowManager.LayoutParams lp, in ILauncherOverlayCallback cb, in int flags);
     oneway void windowDetached(in boolean isChangingConfigurations);
     oneway void closeOverlay(in int flags);
     oneway void onPause();
