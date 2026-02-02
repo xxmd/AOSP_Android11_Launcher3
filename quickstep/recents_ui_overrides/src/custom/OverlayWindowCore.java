@@ -14,22 +14,22 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
-
-import com.google.android.googlequicksearchbox.R;
 import com.google.android.libraries.launcherclient.ILauncherOverlay;
 import com.google.android.libraries.launcherclient.ILauncherOverlayCallback;
 
-import custom.view.HorizontalScrollMonitor;
-import custom.util.LogUtil;
 import custom.aidl.SafeLauncherOverlay;
+import custom.util.LogUtil;
+import custom.view.HorizontalScrollMonitor;
 
 public class OverlayWindowCore {
     private Activity activity;
+    private View rootView;
     private boolean serviceConnected = false;
     private SafeLauncherOverlay safeLauncherOverlay;
 
-    public OverlayWindowCore(Activity activity) {
+    public OverlayWindowCore(Activity activity, View rootView) {
         this.activity = activity;
+        this.rootView = rootView;
     }
 
     public void bindService() {
@@ -56,7 +56,7 @@ public class OverlayWindowCore {
                         LogUtil.debug("ILauncherOverlaylauncherOverlay onServiceStatus bundle: " + bundle);
                         int serviceStatus = bundle.getInt("service_status");
                         serviceConnected = true;
-                        addScrollListener(activity.findViewById(R.id.main));
+                        addScrollListener(rootView);
                     }
                 };
                 Bundle bundle = buildAttachWindowBundle();
