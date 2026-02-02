@@ -108,6 +108,13 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
         initOverlayWindow(this);
     }
 
+    @Override
+    protected void onResume() {
+        LogUtil.debug(String.format("onResume"));
+        super.onResume();
+        overlayWindowCore.addScrollListener(findViewById(android.R.id.content));
+    }
+
     private void initOverlayWindow(Activity activity) {
         this.overlayWindowCore = new OverlayWindowCore(activity);
         overlayWindowCore.bindService();
@@ -119,8 +126,6 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
         if (FeatureFlags.ENABLE_HYBRID_HOTSEAT.get()) {
             mHotseatPredictionController = new HotseatPredictionController(this);
         }
-        LogUtil.debug(String.format("setupViews"));
-        overlayWindowCore.addScrollListener(findViewById(android.R.id.content));
     }
 
     @Override
