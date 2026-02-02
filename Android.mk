@@ -154,6 +154,9 @@ LOCAL_SRC_FILES := \
     quickstep/src/com/google/android/libraries/launcherclient/ILauncherOverlay.aidl \
     quickstep/src/com/google/android/libraries/launcherclient/ILauncherOverlayCallback.aidl
 
+LOCAL_AIDL_INCLUDES := \
+    $(LOCAL_PATH)/quickstep/src
+
 LOCAL_RESOURCE_DIR := \
     $(LOCAL_PATH)/quickstep/res \
     $(LOCAL_PATH)/quickstep/recents_ui_overrides/res
