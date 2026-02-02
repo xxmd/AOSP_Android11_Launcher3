@@ -84,7 +84,7 @@ import java.util.List;
 import java.util.OptionalInt;
 import java.util.stream.Stream;
 
-import custom.OverlayWindowManager;
+import custom.overlayWindowCore;
 
 public class QuickstepLauncher extends BaseQuickstepLauncher {
 
@@ -101,8 +101,12 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
         if (mHotseatPredictionController != null) {
             mHotseatPredictionController.createPredictor();
         }
-        OverlayWindowManager overlayWindowManager = new OverlayWindowManager(this);
-        overlayWindowManager.bindService();
+        initOverlayWindow(this);
+    }
+
+    private void initOverlayWindow(Activity activity) {
+        OverlayWindowCore overlayWindowCore = new OverlayWindowCore(activity);
+        overlayWindowCore.bindService();
     }
 
     @Override
