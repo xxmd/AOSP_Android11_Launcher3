@@ -101,6 +101,7 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LogUtil.debug(String.format("QuickstepLauncher onCreate"));
         super.onCreate(savedInstanceState);
         if (mHotseatPredictionController != null) {
             mHotseatPredictionController.createPredictor();
@@ -110,7 +111,7 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
 
     @Override
     protected void onResume() {
-        LogUtil.debug(String.format("onResume"));
+        LogUtil.debug(String.format("QuickstepLauncher onResume"));
         super.onResume();
         overlayWindowCore.addScrollListener(findViewById(android.R.id.content));
     }
@@ -122,6 +123,7 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
 
     @Override
     protected void setupViews() {
+        LogUtil.debug(String.format("QuickstepLauncher setupViews"));
         super.setupViews();
         if (FeatureFlags.ENABLE_HYBRID_HOTSEAT.get()) {
             mHotseatPredictionController = new HotseatPredictionController(this);
