@@ -110,7 +110,7 @@ public class OverlayWindowCore {
 
     public void addScrollListener(View rootView) {
         HorizontalScrollMonitor.ScrollListener scrollListener = scrollMonitor.getScrollListener();
-        LogUtil.step(String.format("addScrollListener rootView: %s, scrollListener: %s", serviceConnected, rootView, scrollListener));
+        LogUtil.step(String.format("addScrollListener rootView: %s, scrollListener: %s", rootView, scrollListener));
         if (rootView == null || scrollListener != null) {
             return;
         }
