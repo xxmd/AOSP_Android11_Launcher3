@@ -102,7 +102,6 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
         if (mHotseatPredictionController != null) {
             mHotseatPredictionController.createPredictor();
         }
-        initOverlayWindow(this);
     }
 
     private void initOverlayWindow(Activity activity) {
@@ -116,6 +115,7 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
         if (FeatureFlags.ENABLE_HYBRID_HOTSEAT.get()) {
             mHotseatPredictionController = new HotseatPredictionController(this);
         }
+        initOverlayWindow(this);
     }
 
     @Override
