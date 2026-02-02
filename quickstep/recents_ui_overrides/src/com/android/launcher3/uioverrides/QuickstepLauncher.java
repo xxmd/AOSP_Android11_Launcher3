@@ -108,7 +108,7 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
     }
 
     private void initOverlayWindow(Activity activity) {
-        this.overlayWindowCore = new OverlayWindowCore(activity, findViewById(android.R.id.content));
+        this.overlayWindowCore = new OverlayWindowCore(activity);
         overlayWindowCore.bindService();
     }
 
