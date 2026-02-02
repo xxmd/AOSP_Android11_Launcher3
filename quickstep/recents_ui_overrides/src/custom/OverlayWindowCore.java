@@ -20,7 +20,6 @@ import com.google.android.libraries.launcherclient.ILauncherOverlayCallback;
 import custom.aidl.SafeLauncherOverlay;
 import custom.util.LogUtil;
 import custom.view.HorizontalScrollMonitor;
-
 public class OverlayWindowCore {
     private Activity activity;
     private View rootView;
