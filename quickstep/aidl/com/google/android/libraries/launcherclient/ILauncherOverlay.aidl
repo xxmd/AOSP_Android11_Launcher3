@@ -1,7 +1,7 @@
 // ILauncherOverlay.aidl
 package com.google.android.libraries.launcherclient;
 import com.google.android.libraries.launcherclient.ILauncherOverlayCallback;
-import android.view.WindowManager;
+import android.view.WindowManager; // 一点要引入WindowManager，因为在aosp安卓11源代码中只有WindowManager.aidl文件，LayoutParams只是其中一个内部类
 import android.os.Bundle;
 
 interface ILauncherOverlay {
