@@ -84,6 +84,7 @@ import java.util.List;
 import java.util.OptionalInt;
 import java.util.stream.Stream;
 
+import android.app.Activity;
 import custom.overlayWindowCore;
 
 public class QuickstepLauncher extends BaseQuickstepLauncher {
