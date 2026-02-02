@@ -84,6 +84,8 @@ import java.util.List;
 import java.util.OptionalInt;
 import java.util.stream.Stream;
 
+import custom.OverlayWindowManager;
+
 public class QuickstepLauncher extends BaseQuickstepLauncher {
 
     public static final boolean GO_LOW_RAM_RECENTS_ENABLED = false;
@@ -99,6 +101,8 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
         if (mHotseatPredictionController != null) {
             mHotseatPredictionController.createPredictor();
         }
+        OverlayWindowManager overlayWindowManager = new OverlayWindowManager(this);
+        overlayWindowManager.bindService();
     }
 
     @Override
