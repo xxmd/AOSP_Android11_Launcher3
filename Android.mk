@@ -131,15 +131,16 @@ LOCAL_USE_AAPT2 := true
 LOCAL_AAPT2_ONLY := true
 LOCAL_MODULE_TAGS := optional
 
+include $(CLEAR_VARS)
+LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := lib_launcher_client:libs/launcher_client.jar
+include $(BUILD_MULTI_PREBUILT)
+
 LOCAL_STATIC_JAVA_LIBRARIES := \
     SystemUI-statsd \
     SystemUISharedLib \
     launcherprotosnano \
     launcher_log_protos_lite \
     lib_launcher_client
-
-LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := lib_launcher_client:libs/launcher_client.jar
-include $(BUILD_MULTI_PREBUILT)
 
 
 ifneq (,$(wildcard frameworks/base))
