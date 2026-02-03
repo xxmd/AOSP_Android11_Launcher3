@@ -22,7 +22,7 @@ public class OverlayCallbackImpl implements LauncherOverlayManager.LauncherOverl
 
     public OverlayCallbackImpl(Launcher launcher) {
         this.mLauncher = launcher;
-        this.mClient = new LauncherClient(launcher, this, null);
+        this.mClient = new LauncherClient(launcher, this, getClientOptions(null));
         LogUtil.debug("初始化OverlayCallbackImpl和LauncherClient");
     }
 
@@ -152,6 +152,7 @@ public class OverlayCallbackImpl implements LauncherOverlayManager.LauncherOverl
     }
 
     private LauncherClient.ClientOptions getClientOptions(SharedPreferences prefs) {
-        return new LauncherClient.ClientOptions(prefs.getBoolean(KEY_ENABLE_MINUS_ONE, true), true, true);
+//        return new LauncherClient.ClientOptions(prefs.getBoolean(KEY_ENABLE_MINUS_ONE, true), true, true);
+        return new LauncherClient.ClientOptions(true, true, true);
     }
 }
