@@ -5,6 +5,7 @@
 ### 引入 launcher_client.jar
 
 - 往[libs](libs) 目录中加入jar包和mk文件声明
+- 在[Android.mk](Android.mk)文件的 ``LOCAL_STATIC_JAVA_LIBRARIES`` 变量中加入 lib_launcher_client 库
 
 ### 自定义负一屏管理类，实现如下接口
 
