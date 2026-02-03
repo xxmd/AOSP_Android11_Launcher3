@@ -84,10 +84,8 @@ import java.util.List;
 import java.util.OptionalInt;
 import java.util.stream.Stream;
 
-import android.app.Activity;
 import com.android.systemui.plugins.shared.LauncherOverlayManager;
-import custom.launcher.OverlayCallbackImpl;
-import custom.common.util.LogUtil;
+import com.elfun.magazine.ElfunLauncherOverlayManager;
 
 public class QuickstepLauncher extends BaseQuickstepLauncher {
 
@@ -101,13 +99,12 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
 
     @Override // com.android.launcher3.Launcher
     protected LauncherOverlayManager getDefaultOverlay() {
-        return new OverlayCallbackImpl(this);
+        return new ElfunLauncherOverlayManager(this);
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        LogUtil.debug(String.format("QuickstepLauncher onCreate"));
         super.onCreate(savedInstanceState);
         if (mHotseatPredictionController != null) {
             mHotseatPredictionController.createPredictor();
@@ -116,7 +113,6 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
 
     @Override
     protected void setupViews() {
-        LogUtil.debug(String.format("QuickstepLauncher setupViews"));
         super.setupViews();
         if (FeatureFlags.ENABLE_HYBRID_HOTSEAT.get()) {
             mHotseatPredictionController = new HotseatPredictionController(this);

@@ -1,4 +1,4 @@
-package custom.launcher;
+package com.elfun.magazine;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -13,14 +13,14 @@ import java.io.PrintWriter;
 
 import custom.common.util.LogUtil;
 
-public class OverlayCallbackImpl implements LauncherOverlayManager.LauncherOverlay, LauncherClientCallbacks, LauncherOverlayManager, SharedPreferences.OnSharedPreferenceChangeListener {
+public class ElfunLauncherOverlayManager implements LauncherOverlayManager, LauncherOverlayManager.LauncherOverlay, LauncherClientCallbacks, SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String KEY_ENABLE_MINUS_ONE = "pref_enable_minus_one";
     private final LauncherClient mClient;
     private final Launcher mLauncher;
     private LauncherOverlayManager.LauncherOverlayCallbacks mLauncherOverlayCallbacks;
     private boolean mWasOverlayAttached = false;
 
-    public OverlayCallbackImpl(Launcher launcher) {
+    public ElfunLauncherOverlayManager(Launcher launcher) {
         this.mLauncher = launcher;
         this.mClient = new LauncherClient(launcher, this, getClientOptions(null));
         LogUtil.debug("初始化OverlayCallbackImpl和LauncherClient");
