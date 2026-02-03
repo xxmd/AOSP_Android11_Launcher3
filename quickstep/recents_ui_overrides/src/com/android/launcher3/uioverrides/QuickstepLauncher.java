@@ -123,10 +123,10 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
 //        overlayWindowCore.addScrollListener(rootView);
 //    }
 
-    private void initOverlayWindow(Activity activity) {
-        this.overlayWindowCore = new OverlayWindowCore(activity);
-        overlayWindowCore.bindService();
-    }
+//    private void initOverlayWindow(Activity activity) {
+//        this.overlayWindowCore = new OverlayWindowCore(activity);
+//        overlayWindowCore.bindService();
+//    }
 
     @Override
     protected void setupViews() {
