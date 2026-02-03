@@ -85,6 +85,7 @@ import java.util.OptionalInt;
 import java.util.stream.Stream;
 
 import android.app.Activity;
+import com.android.systemui.plugins.shared.LauncherOverlayManager;
 import custom.launcher.LauncherOverlayManagerImpl;
 import custom.common.util.LogUtil;
 
@@ -97,7 +98,7 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
     public static final AsyncCommand SET_SHELF_HEIGHT = (context, arg1, arg2) ->
             SystemUiProxy.INSTANCE.get(context).setShelfHeight(arg1 != 0, arg2);
 
-    private OverlayWindowCore overlayWindowCore;
+//    private OverlayWindowCore overlayWindowCore;
 
     @Override // com.android.launcher3.Launcher
     protected LauncherOverlayManager getDefaultOverlay() {
