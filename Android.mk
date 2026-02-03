@@ -131,12 +131,14 @@ LOCAL_USE_AAPT2 := true
 LOCAL_AAPT2_ONLY := true
 LOCAL_MODULE_TAGS := optional
 
+LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := lib_launcher_client:libs/launcher_client.jar
+
 LOCAL_STATIC_JAVA_LIBRARIES := \
     SystemUI-statsd \
     SystemUISharedLib \
     launcherprotosnano \
-    launcher_log_protos_lite
-LOCAL_STATIC_JAVA_LIBRARIES += $(call all-java-files-under, libs)
+    launcher_log_protos_lite \
+    lib_launcher_client
 
 ifneq (,$(wildcard frameworks/base))
   LOCAL_PRIVATE_PLATFORM_APIS := true
