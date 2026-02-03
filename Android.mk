@@ -136,6 +136,8 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     SystemUISharedLib \
     launcherprotosnano \
     launcher_log_protos_lite
+LOCAL_STATIC_JAVA_LIBRARIES += $(call all-java-files-under, libs)
+
 ifneq (,$(wildcard frameworks/base))
   LOCAL_PRIVATE_PLATFORM_APIS := true
 else
