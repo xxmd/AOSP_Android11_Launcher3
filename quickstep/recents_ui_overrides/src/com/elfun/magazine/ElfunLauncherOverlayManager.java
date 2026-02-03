@@ -3,6 +3,7 @@ package com.elfun.magazine;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.android.launcher3.Launcher;
 import com.android.systemui.plugins.shared.LauncherOverlayManager;
@@ -10,8 +11,6 @@ import com.google.android.libraries.gsa.launcherclient.LauncherClient;
 import com.google.android.libraries.gsa.launcherclient.LauncherClientCallbacks;
 
 import java.io.PrintWriter;
-
-import custom.common.util.LogUtil;
 
 public class ElfunLauncherOverlayManager implements LauncherOverlayManager, LauncherOverlayManager.LauncherOverlay, LauncherClientCallbacks, SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String KEY_ENABLE_MINUS_ONE = "pref_enable_minus_one";
@@ -23,7 +22,6 @@ public class ElfunLauncherOverlayManager implements LauncherOverlayManager, Laun
     public ElfunLauncherOverlayManager(Launcher launcher) {
         this.mLauncher = launcher;
         this.mClient = new LauncherClient(launcher, this, getClientOptions(null));
-        LogUtil.debug("初始化OverlayCallbackImpl和LauncherClient");
     }
 
     @Override // com.android.systemui.plugins.shared.LauncherOverlayManager
