@@ -85,7 +85,7 @@ import java.util.OptionalInt;
 import java.util.stream.Stream;
 
 import android.app.Activity;
-import custom.launcher.OverlayWindowCore;
+import custom.launcher.LauncherOverlayManagerImpl;
 import custom.common.util.LogUtil;
 
 public class QuickstepLauncher extends BaseQuickstepLauncher {
@@ -99,6 +99,12 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
 
     private OverlayWindowCore overlayWindowCore;
 
+    @Override // com.android.launcher3.Launcher
+    protected LauncherOverlayManager getDefaultOverlay() {
+        return new LauncherOverlayManagerImpl(this);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LogUtil.debug(String.format("QuickstepLauncher onCreate"));
@@ -106,16 +112,16 @@ public class QuickstepLauncher extends BaseQuickstepLauncher {
         if (mHotseatPredictionController != null) {
             mHotseatPredictionController.createPredictor();
         }
-        initOverlayWindow(this);
+//        initOverlayWindow(this);
     }
 
-    @Override
-    protected void onResume() {
-        View rootView = getRootView();
-        LogUtil.debug(String.format("QuickstepLauncher onResume rootView: " + rootView));
-        super.onResume();
-        overlayWindowCore.addScrollListener(rootView);
-    }
+//    @Override
+//    protected void onResume() {
+//        View rootView = getRootView();
+//        LogUtil.debug(String.format("QuickstepLauncher onResume rootView: " + rootView));
+//        super.onResume();
+//        overlayWindowCore.addScrollListener(rootView);
+//    }
 
     private void initOverlayWindow(Activity activity) {
         this.overlayWindowCore = new OverlayWindowCore(activity);
