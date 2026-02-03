@@ -8,6 +8,8 @@ import android.view.WindowManager;
 import com.google.android.libraries.launcherclient.ILauncherOverlay;
 import com.google.android.libraries.launcherclient.ILauncherOverlayCallback;
 
+import custom.common.util.LogUtil;
+
 public class SafeLauncherOverlay implements ILauncherOverlay {
     private ILauncherOverlay innerLauncherOverlay;
 
@@ -20,123 +22,123 @@ public class SafeLauncherOverlay implements ILauncherOverlay {
         try {
             innerLauncherOverlay.startScroll();
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            LogUtil.error("startScroll", e);
         }
     }
 
     @Override
-    public void onScroll(float progress)  {
+    public void onScroll(float progress) {
         try {
             innerLauncherOverlay.onScroll(progress);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            LogUtil.error("onScroll", e);
         }
     }
 
     @Override
-    public void endScroll()  {
+    public void endScroll() {
         try {
             innerLauncherOverlay.endScroll();
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            LogUtil.error("endScroll", e);
         }
     }
 
     @Override
-    public void windowAttached(WindowManager.LayoutParams lp, ILauncherOverlayCallback cb, int flags)  {
+    public void windowAttached(WindowManager.LayoutParams lp, ILauncherOverlayCallback cb, int flags) {
         try {
             innerLauncherOverlay.windowAttached(lp, cb, flags);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            LogUtil.error("windowAttached", e);
         }
     }
 
     @Override
-    public void windowDetached(boolean isChangingConfigurations)  {
+    public void windowDetached(boolean isChangingConfigurations) {
         try {
             innerLauncherOverlay.windowDetached(isChangingConfigurations);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            LogUtil.error("windowDetached", e);
         }
     }
 
     @Override
-    public void closeOverlay(int flags)  {
+    public void closeOverlay(int flags) {
         try {
             innerLauncherOverlay.closeOverlay(flags);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            LogUtil.error("closeOverlay", e);
         }
     }
 
     @Override
-    public void onPause()  {
+    public void onPause() {
         try {
             innerLauncherOverlay.onPause();
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            LogUtil.error("onPause", e);
         }
     }
 
     @Override
-    public void onResume()  {
+    public void onResume() {
         try {
             innerLauncherOverlay.onResume();
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            LogUtil.error("onResume", e);
         }
     }
 
     @Override
-    public void openOverlay(int flags)  {
+    public void openOverlay(int flags) {
         try {
             innerLauncherOverlay.openOverlay(flags);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            LogUtil.error("openOverlay", e);
         }
     }
 
     @Override
-    public void requestVoiceDetection(boolean start)  {
+    public void requestVoiceDetection(boolean start) {
 
     }
 
     @Override
-    public String getVoiceSearchLanguage()  {
+    public String getVoiceSearchLanguage() {
         return "";
     }
 
     @Override
-    public boolean isVoiceDetectionRunning()  {
+    public boolean isVoiceDetectionRunning() {
         return false;
     }
 
     @Override
-    public boolean hasOverlayContent()  {
+    public boolean hasOverlayContent() {
         return false;
     }
 
     @Override
-    public void windowAttached2(Bundle bundle, ILauncherOverlayCallback cb)  {
+    public void windowAttached2(Bundle bundle, ILauncherOverlayCallback cb) {
         try {
             innerLauncherOverlay.windowAttached2(bundle, cb);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            LogUtil.error("windowAttached2", e);
         }
     }
 
     @Override
-    public void unusedMethod()  {
+    public void unusedMethod() {
 
     }
 
     @Override
-    public void setActivityState(int flags)  {
+    public void setActivityState(int flags) {
 
     }
 
     @Override
-    public boolean startSearch(byte[] data, Bundle bundle)  {
+    public boolean startSearch(byte[] data, Bundle bundle) {
         return false;
     }
 

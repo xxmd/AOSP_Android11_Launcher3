@@ -5,8 +5,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
-import android.content.pm.ServiceInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,27 +18,22 @@ import com.google.android.libraries.launcherclient.ILauncherOverlay;
 import com.google.android.libraries.launcherclient.ILauncherOverlayCallback;
 
 import custom.common.util.LogUtil;
+import custom.launcher.entity.Constants;
+import custom.launcher.entity.converter.HorizonScrollConverter;
 
 public class OverlayWindowCore {
     private Activity activity;
-    private View rootView;
     private boolean serviceConnected = false;
     private SafeLauncherOverlay safeLauncherOverlay;
-    public static final String OVERLAY_PACKAGE_NAME = "com.google.android.googlequicksearchbox";
-    public static final String OVERLAY_SERVICE_NAME = "com.google.android.apps.gsa.nowoverlayservice.DrawerOverlayService";
-    private HorizontalScrollMonitor scrollMonitor;
+    private HorizonScrollConverter horizonScrollConverter;
 
     public OverlayWindowCore(Activity activity) {
         this.activity = activity;
-        this.scrollMonitor = new HorizontalScrollMonitor(activity);
+        this.horizonScrollConverter = new HorizonScrollConverter();
     }
 
     public void bindService() {
-        boolean serviceExist = isServiceExist(activity, OVERLAY_PACKAGE_NAME, OVERLAY_SERVICE_NAME);
-        LogUtil.step("bindService serviceExist: " + serviceExist);
-        Intent intent = new Intent("com.android.launcher3.WINDOW_OVERLAY");
-        intent.setClassName(OVERLAY_PACKAGE_NAME, OVERLAY_SERVICE_NAME);
-        intent.setData(Uri.parse("app://somepath"));
+        Intent intent = buildOverlayWindowIntent();
         boolean bindServiceSuccess = activity.bindService(intent, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
@@ -78,38 +71,15 @@ public class OverlayWindowCore {
         LogUtil.step("bindServiceSuccess: " + bindServiceSuccess);
     }
 
-    /**
-     * 判断指定 Service 是否存在（已注册在系统中）
-     *
-     * @param context     上下文
-     * @param packageName 服务所在的包名
-     * @param className   服务完整类名（包含包名）
-     * @return true = 存在，false = 不存在
-     */
-    public static boolean isServiceExist(Context context, String packageName, String className) {
-        try {
-            PackageManager pm = context.getPackageManager();
-
-            // 构造 ComponentName
-            ComponentName component = new ComponentName(packageName, className);
-
-            // 查询 ServiceInfo
-            ServiceInfo serviceInfo = pm.getServiceInfo(component, 0);
-
-            // 如果能拿到 ServiceInfo，说明服务存在
-            return serviceInfo != null;
-        } catch (PackageManager.NameNotFoundException e) {
-            // 包名或类名不存在 → 服务不存在
-            return false;
-        } catch (Exception e) {
-            // 其他异常（如权限问题），也视为不存在
-            LogUtil.error("ServiceCheck Check service failed", e);
-            return false;
-        }
+    private Intent buildOverlayWindowIntent() {
+        Intent intent = new Intent(Constants.OVERLAY_SERVICE_INTENT);
+        intent.setClassName(Constants.OVERLAY_PACKAGE_NAME, Constants.OVERLAY_SERVICE_NAME);
+        intent.setData(Uri.parse("app://somepath"));
+        return intent;
     }
 
     public void addScrollListener(View rootView) {
-        HorizontalScrollMonitor.ScrollListener scrollListener = scrollMonitor.getScrollListener();
+        HorizonScrollConverter.ScrollListener scrollListener = horizonScrollConverter.getScrollListener();
         LogUtil.step(String.format("addScrollListener rootView: %s, scrollListener: %s", rootView, scrollListener));
         if (rootView == null || scrollListener != null) {
             return;
@@ -118,17 +88,14 @@ public class OverlayWindowCore {
         if (measuredWidth == 0) {
             measuredWidth = rootView.getContext().getResources().getDisplayMetrics().widthPixels;
         }
-        LogUtil.step(String.format("rootView measuredWidth: %d", measuredWidth));
-        scrollMonitor.setMaxScrollDistance(measuredWidth);
+        horizonScrollConverter.setMaxScrollDistance(measuredWidth);
         rootView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                LogUtil.debug(String.format("rootView onTouch: %s", event));
-                return scrollMonitor.onTouchEvent(event);
+                return horizonScrollConverter.onTouchEvent(event);
             }
         });
-        LogUtil.step(String.format("rootView.setOnTouchListener"));
-        scrollMonitor.setScrollListener(new HorizontalScrollMonitor.ScrollListener() {
+        horizonScrollConverter.setScrollListener(new HorizonScrollConverter.ScrollListener() {
             @Override
             public void onScrollStart() {
                 LogUtil.debug(String.format("onScrollStart"));
